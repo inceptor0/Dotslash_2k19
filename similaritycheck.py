@@ -26,7 +26,8 @@ k=(tfidf * tfidf.T).A
 
 k=list(k[0])
 
-l = sum(k)/len(k)
+k = sorted(k)
+l = k[len(k)/2]
 
 s=''
 for i in range(len(k)):
