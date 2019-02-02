@@ -1,0 +1,32 @@
+from qt import *
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+from PyQt5 import QtWidgets
+# import main1
+
+class FirstApp(Ui_MainWindow):
+    def select_files(directory_location=None):
+        qtapp = QApplication([directory_location])
+        qtwgt = QtWidgets.QWidget()
+        filenames, _ = QFileDialog.getOpenFileNames(qtwgt)
+        return filenames
+
+    def __init__(self, window):
+        self.setupUi(window)
+        self.pushButton.clicked.connect(self.clickMe)
+        self.pushButton3.clicked.connect(self.clickMe3)
+
+    def clickMe(self):
+        filenames = self.select_files()
+        print("You selected:\n", "\n".join(filename for filename in filenames))
+    def clickMe3(self):
+        print(self.txt_box.displayText())
+
+
+app =QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+
+ui = FirstApp(MainWindow)
+
+MainWindow.show()
+app.exec_()
