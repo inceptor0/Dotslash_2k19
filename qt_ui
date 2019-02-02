@@ -1,22 +1,21 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+from PyQt5.QtWidgets import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName('Main Window')
-        MainWindow.resize(415, 245)
+        MainWindow.resize(900, 900)
         self.centralwidget = QtWidgets.QWidget(MainWindow) 
         self.centralwidget.setObjectName('central object') 
         self.pushButton = QtWidgets.QPushButton(self.centralwidget) 
-        self.pushButton.setGeometry(QtCore.QRect(210, 138, 85, 27)) 
+        self.pushButton.setGeometry(QtCore.QRect(110, 138, 85, 27)) 
         self.pushButton.setObjectName('push button')
-        # self.txt_name = QtWidgets.QLineEdit(self.centralwidget) 
-        # self.txt_name.setGeometry(QtCore.QRect(200, 90, 113, 27)) 
-        # self.txt_name.setObjectName('txt_name')
-        # self.label = QtWidgets.QLabel(self.centralwidget)
-        # self.label.setGeometry(QtCore.QRect(40, 90, 141, 21)) 
-        # self.label.setObjectName('label') 
+        self.txt_box = QtWidgets.QLineEdit(self.centralwidget)
+        self.txt_box.setGeometry(QtCore.QRect(50,50,600,300)) 
+        self.pushButton3 = QtWidgets.QPushButton(self.centralwidget) 
+        self.pushButton3.setGeometry(QtCore.QRect(110, 238, 85, 27)) 
+        self.pushButton3.setObjectName('push button')
         self.pushButton2 = QtWidgets.QPushButton(self.centralwidget) 
-        self.pushButton2.setGeometry(QtCore.QRect(110, 138, 85, 27)) 
+        self.pushButton2.setGeometry(QtCore.QRect(270, 138, 85, 27)) 
         self.pushButton2.setObjectName('push button2')
         MainWindow.setCentralWidget(self.centralwidget) 
         self.statusbar = QtWidgets.QStatusBar(MainWindow) 
@@ -27,6 +26,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("Main Window", "My First App"))
-        self.pushButton.setText(_translate("Main Window", "Click Me1"))
+        self.pushButton.setText(_translate("Main Window", "Click to upload image"))
         self.pushButton2.setText(_translate("Main Window", "Click Me2"))
         # self.label.setText(_translate("Main Window ","Please enter your name"))
+        self.pushButton3.setText(_translate("Main Window", "Click Me3"))
