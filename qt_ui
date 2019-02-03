@@ -1,43 +1,79 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import *
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName('Main Window')
-        MainWindow.resize(900, 900)
-        self.centralwidget = QtWidgets.QWidget(MainWindow) 
-        self.centralwidget.setObjectName('central object') 
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget) 
-        self.pushButton.setGeometry(QtCore.QRect(50, 150, 155, 27)) #Push Button 1
-        self.pushButton.setObjectName('push button')
-        # self.txt_box = QtWidgets.QLineEdit(self.centralwidget)  #Text Box
-        # self.txt_box.setGeometry(QtCore.QRect(50,350,600,400)) 
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(50, 350, 600, 400))
-        self.textEdit.setAcceptRichText(False)
-        self.textEdit.setPlaceholderText("Enter or paste the text...")
-        self.pushButton3 = QtWidgets.QPushButton(self.centralwidget) 
-        self.pushButton3.setGeometry(QtCore.QRect(400, 770, 250, 40)) #Push Button 3
-        self.pushButton3.setObjectName('push button')
-        self.pushButton2 = QtWidgets.QPushButton(self.centralwidget) 
-        self.pushButton2.setGeometry(QtCore.QRect(290, 158, 85, 27)) #Push Button 2
-        self.pushButton2.setObjectName('push button2')
-        # self.txt_box.setText('Name:')
-        # self.txt_box.setObjectName("Enter or paste the text...")
-        MainWindow.setCentralWidget(self.centralwidget) 
-        self.statusbar = QtWidgets.QStatusBar(MainWindow) 
-        self.statusbar.setObjectName('status bar') 
-        self.label = QtWidgets.QLabel(self.centralwidget) # Label
-        self.label.setGeometry(QtCore.QRect(50, 100, 300, 50)) 
+from qt import *
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+from PyQt5 import QtWidgets
+from summarizer import *
+import requests
+from scan import *
+from ocr import *
+pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+import pytesseract
+from summarizer2 import *
+from speech_to_text import *
+from pdf import *
+
+class FirstApp(Ui_MainWindow):
+    def select_files(directory_location=None):
+        qtapp = QApplication([directory_location])
+        qtwgt = QtWidgets.QWidget()
+        filenames, _ = QFileDialog.getOpenFileNames(qtwgt)
+        return filenames
+
+    def __init__(self, window):
+        self.setupUi(window)
+        self.pushButton.clicked.connect(self.clickMe)
+        self.pushButton2.clicked.connect(self.clickMe2)
+        self.pushButton3.clicked.connect(self.clickMe3)
+        self.pushButton1.clicked.connect(self.click)
         
-        MainWindow.setStatusBar(self.statusbar)
-        self. retranslateUi(MainWindow) 
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("Main Window", "My First App"))
-        self.pushButton.setText(_translate("Main Window", "Upload image"))
-        self.pushButton2.setText(_translate("Main Window", "Click Me2"))
-        # self.label.setText(_translate("Main Window ","Please enter your name"))
-        self.pushButton3.setText(_translate("Main Window", "Click to summarize the text"))
-        self.label.setText(_translate("Main Window", "Upload the image which you want to be summarized"))
-        # self.txt_box.setPlaceholderText('Enter or paste the text...')
+    
+    def click(self):
+        convert()
+        f = open.read
+    
+    def clickMe2(self):
+        text = pytesseract.image_to_string(Image.open('temp2.jpg'))
+        f = open('jenim1.txt',"w+")
+        f.write(text)
+        f = open('jenim.txt',"w+")
+        f.write(text)
+        f = open('jenim.txt',"r")
+        self.textEdit.setText(f.read())
+        summ2()
+        f = open('output_upload.txt',"r")
+        self.textEdit2.setText(f.read())
+
+    def clickMe(self):
+        filenames = self.select_files()
+        # scanning(filenames)
+        filename = filenames[0]
+        im = Image.open(filename)
+        rgb_im = im.convert('RGB')
+        rgb_im.save('temp2.jpg')
+    
+
+        # r = sr.Recognizer()
+        # with sr.Microphone() as source:
+        #     print("Say something!")
+        #     audio = r.listen(source)
+        # print("You said: " + r.recognize_google(audio))
+        # print("You selected:\n", "\n".join(filename for filename in filenames))
+        # f = open('output_upload.txt',"rb")
+        # self.textEdit2.setText(f.read())
+    def clickMe3(self):
+        inp = self.textEdit.toPlainText()
+        f= open("summ_file1.txt","w+")
+        f.write(inp)
+        f= open("summ_file.txt","w+")
+        f.write(inp)
+        temp = inp
+        summ()
+        f = open('out_copy.txt',"r")
+        self.textEdit2.setText(f.read())
+app =QtWidgets.QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+
+ui = FirstApp(MainWindow)
+
+MainWindow.show()
+app.exec_()
