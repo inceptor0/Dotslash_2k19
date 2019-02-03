@@ -2,7 +2,10 @@ from qt import *
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 from PyQt5 import QtWidgets
-# import main1
+from summarizer import *
+import requests
+from scan import *
+from ocr import *
 
 class FirstApp(Ui_MainWindow):
     def select_files(directory_location=None):
@@ -19,9 +22,16 @@ class FirstApp(Ui_MainWindow):
     def clickMe(self):
         filenames = self.select_files()
         print("You selected:\n", "\n".join(filename for filename in filenames))
+        # scanning(filenames)
+        ocr_run(filenames)
     def clickMe3(self):
-        print(self.txt_box.displayText())
-
+        inp = self.textEdit.toPlainText()
+        f= open("summ_file1.txt","w+")
+        f.write(inp)
+        f= open("summ_file.txt","w+")
+        f.write(inp)
+        temp = inp
+        summ()
 
 app =QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
